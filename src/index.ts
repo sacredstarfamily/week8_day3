@@ -1,17 +1,22 @@
 import { v4 as uuidv4 } from 'uuid';
 
 class Item {
-    constructor(name: string, price: number, description: string) {
-        private _id: string = uuidv4();
-        private _name: string;
-        private _price: number;
-        private _description: string;
-    }
+    constructor(
+    private _name: string,
+    private _price: number,
+    private _description: string,
+    private _id: string = uuidv4()
+) 
+{
+
+}
 
     get id(): string {
         return this._id;
     }
-
+    set id(id: string) {
+        this._id = id;
+    }
     get name(): string {
         return this._name;
     }
@@ -40,12 +45,14 @@ class Item {
 class User {
    
 
-    constructor(name: string, age: number) {
-       private _id = uuidv4();
-       private _name: string = name;
-       private _age: number = age;
-       private _cart: Items[] = [];
-    }
+    constructor(
+    private _name: string,
+    private _age: number,
+    private _cart: Item[] = [],
+    private _id = uuidv4()
+) {
+
+}
 
     get id(): string {
         return this._id;
@@ -123,61 +130,12 @@ class Shop {
 
 // Driver Code
 const shop = new Shop();
-const user = new User("Alice Goodtimes", 25);
+const user = new User("Alice", 30);
 
-const shoes = shop.items.find((item) => item.name === "Shoes");
-if (shoes) {
-    user.addToCart(shoes);
-}
-
-console.log("User's Cart after adding Shoes:");
+user.addToCart(shop.items[0]);
+user.addToCart(shop.items[1]);
+user.addToCart(shop.items[2]);
+user.addToCart(shop.items[2]);
+user.removeFromCart(shop.items[0]);
+user.removeQuantityFromCart(shop.items[1], 1);
 user.printCart();
-console.log("Total of User's Cart:", user.cartTotal());
-
-const hat = shop.items.find((item) => item.name === "Hat");
-if (hat) {
-    user.addToCart(hat);
-    user.addToCart(hat);
-    user.addToCart(hat);
-}
-
-console.log(`${user.name}'s Cart after adding 3 Hats:`);
-user.printCart();
-console.log("Total of User's Cart:", user.cartTotal());
-
-const jacket = shop.items.find((item) => item.name === "Jacket");
-if (jacket) {
-    user.addToCart(jacket);
-    user.addToCart(jacket);
-    user.addToCart(jacket);
-}
-
-console.log(`${user.name}'s Cart after adding 3 Jackets:`);
-user.printCart();
-console.log("Total of User's Cart:", user.cartTotal());
-
-user.removeFromCart(hat);
-console.log(`${user.name}'s Cart after removing Hat:`);
-user.printCart();
-console.log("Total of User's Cart:", user.cartTotal());
-
-console.log("Number of Hats in User's Cart:", user.cart.filter((item) => item.name === "Hat").length);
-user.removeQuantityFromCart(jacket, 2);
-user.printCart();
-console.log("User's Cart after removing 2 Jackets:");
-console.log("Total of User's Cart:", user.cartTotal());
-console.log(`${user.name}'s Cart before removing all Hats:`);
-user.printCart();
-console.log("Total of User's Cart:", user.cartTotal());
-
-user.removeFromCart(hat);
-console.log(`${user.name}'s Cart after removing all Hats:`);
-user.printCart();
-console.log("Total of User's Cart:", user.cartTotal());
-
-console.log("Number of Hats in User's Cart:", user.cart.filter((item) => item.name === "Hat").length);
-
-user.removeQuantityFromCart(jacket, 2);
-console.log(`${user.name}'s Cart after removing 2 Jackets:`);
-user.printCart();
-console.log("Total of User's Cart:", user.cartTotal());
